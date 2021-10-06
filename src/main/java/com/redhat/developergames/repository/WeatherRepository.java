@@ -10,7 +10,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.infinispan.manager.RemoteCacheManager;
+import org.infinispan.client.hotrod.RemoteCacheManager;
 
 @Component
 public class WeatherRepository {
