@@ -1,6 +1,6 @@
 package com.redhat.developergames.config;
 
-//import org.infinispan.spring.starter.remote.InfinispanRemoteCacheCustomizer;
+import org.infinispan.spring.starter.remote.InfinispanRemoteCacheCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -8,13 +8,6 @@ import org.springframework.core.annotation.Order;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
-import org.infinispan.spring.starter.embedded.InfinispanCacheConfigurer;
-import org.infinispan.spring.starter.embedded.InfinispanGlobalConfigurationCustomizer;
-import org.infinispan.spring.starter.embedded.InfinispanConfigurationCustomizer;
-import org.infinispan.configuration.cache.ConfigurationBuilder;
-import org.infinispan.configuration.cache.CacheMode;
-import org.infinispan.eviction.EvictionType;
 
 @Configuration
 public class InfinispanConfiguration {
