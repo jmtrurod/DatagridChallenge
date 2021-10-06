@@ -19,7 +19,7 @@ import org.infinispan.eviction.EvictionType;
 @Configuration
 public class InfinispanConfiguration {
 
-   /*@Bean
+   @Bean
    @Order(Ordered.HIGHEST_PRECEDENCE)
    public InfinispanRemoteCacheCustomizer caches() {
       return b -> {
@@ -39,27 +39,5 @@ public class InfinispanConfiguration {
          throw new RuntimeException(e);
       }
       return cacheConfigUri;
-   }*/
-
-   // Configuración para usar datagrid en local a continuación
-   @Bean
-    public InfinispanCacheConfigurer cacheConfigurer() {
-        return manager -> {
-            final org.infinispan.configuration.cache.Configuration ispnConfig = new ConfigurationBuilder()
-                            .clustering()
-                            .cacheMode(CacheMode.LOCAL)
-                            .build();
-
-            manager.defineConfiguration("local-sync-config", ispnConfig);
-        };
-    }
-
-    @Bean(name = "testCache")
-    public org.infinispan.configuration.cache.Configuration testCache() {
-        return new ConfigurationBuilder()
-            //.read(baseCache)
-            //.memory().size(1000L)
-            //.memory().evictionType(EvictionType.COUNT)
-            .build(); // MUY IMPORTANTE, EL PARÁMETRO EVICTION ES EL QUE ESTABLECE CUÁNTO TIEMPO PUEDO PERMANECER ALMACENADO UN VALOR EN LA MEMORIA
-    }
+   }
 }
