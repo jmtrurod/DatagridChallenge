@@ -10,16 +10,17 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.infinispan.client.hotrod.RemoteCacheManager;
-import org.infinispan.client.hotrod.RemoteCache;
+import org.infinispan.manager.EmbeddedCacheManager;
 
 @Component
 public class WeatherRepository {
 
+    private final EmbeddedCacheManager cacheManager;
+
     @Autowired
-    @Qualifier("serializationWeatherCache")
-    private RemoteCache<String, Weather> weatherCache;
+    public WeatherRepository(EmbeddedCacheManager cacheManager) {
+        this.cacheManager = cacheManager;
+    }
 
    List<String> locations = Arrays.asList(
          "paris",
@@ -37,16 +38,16 @@ public class WeatherRepository {
 
    public Weather getByLocation(String location, String username) {
 
-   // weatherCache.put(username, location);
+    cacheManager.getCache("testCache").put(username, location);
 
-        Weather weather = (Weather) weatherCache.get(location);
+        Weather weather = (Weather) cacheManager.getCache("testCache").get(location);
         if (weather == null) {
             try{
                 weather = fetchWeather(location);
             } catch (Exception e) {
                 weather = null;
             }
-            weatherCache.put(location, weather);
+            cacheManager.getCache("testCache").put(location, weather);
         }
         return weather;
        
@@ -68,7 +69,7 @@ public class WeatherRepository {
    }
 
    public String getLastLocation(String username) {
-       //String lastLocation = (String) weatherCache.get(username);
-       return null;//lastLocation == null ? "There's no location for user " + username + " yet!" : lastLocation;
+       String lastLocation = (String) cacheManager.getCache("testCache").get(username);
+       return lastLocation == null ? "There's no location for user " + username + " yet!" : lastLocation;
    }
 }
