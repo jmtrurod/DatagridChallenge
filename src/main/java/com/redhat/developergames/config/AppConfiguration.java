@@ -39,7 +39,7 @@ public class AppConfiguration {
             .build();
 
     @Bean
-    RemoteCache<Integer, Weather> serializationWeatherCache(){
+    RemoteCache<String, Weather> serializationWeatherCache(){
         return remoteCacheManager.getCache("weather");
     }
 }
