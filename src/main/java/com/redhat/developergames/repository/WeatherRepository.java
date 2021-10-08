@@ -18,7 +18,7 @@ public class WeatherRepository {
 
     @Autowired
     @Qualifier("serializationWeatherCache")
-    private RemoteCache<Integer, Book> booksCache;
+    private RemoteCache<String, Weather> weatherCache;
 
    List<String> locations = Arrays.asList(
          "paris",
@@ -36,16 +36,16 @@ public class WeatherRepository {
 
    public Weather getByLocation(String location, String username) {
 
-    cacheManager.getCache("testCache").put(username, location);
+   // weatherCache.put(username, location);
 
-        Weather weather = (Weather) cacheManager.getCache("testCache").get(location);
+        Weather weather = (Weather) weatherCache.get(location);
         if (weather == null) {
             try{
                 weather = fetchWeather(location);
             } catch (Exception e) {
                 weather = null;
             }
-            cacheManager.getCache("testCache").put(location, weather);
+            weatherCache.put(location, weather);
         }
         return weather;
        
@@ -67,7 +67,7 @@ public class WeatherRepository {
    }
 
    public String getLastLocation(String username) {
-       String lastLocation = (String) cacheManager.getCache("testCache").get(username);
+       String lastLocation = (String) weatherCache.get(username);
        return lastLocation == null ? "There's no location for user " + username + " yet!" : lastLocation;
    }
 }
