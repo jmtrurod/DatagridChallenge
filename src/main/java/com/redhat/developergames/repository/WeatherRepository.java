@@ -68,7 +68,7 @@ public class WeatherRepository {
    }
 
    public String getLastLocation(String username) {
-       String lastLocation = (String) weatherCache.get(username);
-       return lastLocation == null ? "There's no location for user " + username + " yet!" : lastLocation;
+       //String lastLocation = (String) weatherCache.get(username);
+       return null;//lastLocation == null ? "There's no location for user " + username + " yet!" : lastLocation;
    }
 }
