@@ -10,17 +10,15 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.infinispan.client.hotrod.RemoteCacheManager;
 
 @Component
 public class WeatherRepository {
 
-    private final RemoteCacheManager cacheManager;
-
     @Autowired
-    public WeatherRepository(RemoteCacheManager cacheManager) {
-        this.cacheManager = cacheManager;
-    }
+    @Qualifier("serializationWeatherCache")
+    private RemoteCache<Integer, Book> booksCache;
 
    List<String> locations = Arrays.asList(
          "paris",
